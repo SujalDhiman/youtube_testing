@@ -32,5 +32,7 @@ app.get("/check",(req,res)=>{
     res.status(200).send("checking something")
 })
 
+import videoRouter from "../src/routes/video.route.js"
+app.use("/api/v1/video",videoRouter)
 
 export {app}
