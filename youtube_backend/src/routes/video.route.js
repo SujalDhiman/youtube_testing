@@ -5,6 +5,13 @@ const router=express.Router()
 
 
 
-router.route("/createVideo").post(upload.single('video'),createVideo)
+router.route("/createVideo").post(upload.fields([
+    {
+        name:"video"
+    },
+    {
+        name:"thumbnail"
+    }
+]),createVideo)
 
 export default router

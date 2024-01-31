@@ -11,7 +11,7 @@ cloudinary.config({
 const uploadOnCloudinary=async (localFilePath)=>{
 
     try {
-        
+        console.log("inside upload ",localFilePath )
         if(!localFilePath) return null;
         const response=await cloudinary.uploader.upload(localFilePath,
             {
@@ -19,12 +19,10 @@ const uploadOnCloudinary=async (localFilePath)=>{
                 resource_type:"auto"
             })
         
-
         fs.unlinkSync(localFilePath)
         return response
         
     } catch (error) {
-        fs.unlinkSync(localFilePath)
         return null
     }
 }
@@ -38,6 +36,7 @@ const deleteFileFromCloudinary=async (fileURL)=>{
 
         const response=await cloudinary.uploader.destroy(fileURL)
 
+        fs.unlinkSync(localFilePath)
         return response.result
 
     } catch (error) {
