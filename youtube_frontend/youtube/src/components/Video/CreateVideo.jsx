@@ -1,6 +1,6 @@
 import { useState } from "react";
 import {useForm} from "react-hook-form"
-import { URL } from "../endpoints";
+import { URL } from "../../endpoints";
 import axios from "axios";
 
 function CreateVideo()
