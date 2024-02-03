@@ -1,12 +1,12 @@
 import { useSelector } from "react-redux";
-
+import { useNavigate } from "react-router-dom";
 export default function Home() {
   const authStatus = useSelector((state) => state.auth.userStatus);
   return (
     <nav>
       {!authStatus ? (
         <>
-          <button>SignUp</button>
+          <button onClick={() => nav}>SignUp</button>
           <button>Login</button>
         </>
       ) : (
