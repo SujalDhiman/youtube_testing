@@ -4,26 +4,30 @@ import App from "./App.jsx";
 import "./index.css";
 import store from "./reduxtoolkit/store.js";
 import { Provider } from "react-redux";
-import {RouterProvider, createBrowserRouter} from "react-router-dom"
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Home, Login } from "./componentsCollection.js";
+import { Register } from "./components/user/Register.jsx";
 
-
-const router=createBrowserRouter([
+const router = createBrowserRouter([
   {
-      path:"/",
-      element:<App/>,
-      children:[
-        {
-          path:"/home",
-          element:<Home/>
-        },
-        {
-          path:"/login",
-          element:<Login/>
-        }
-      ]
-  }
-])
+    path: "/",
+    element: <App />,
+    children: [
+      {
+        path: "home",
+        element: <Home />,
+      },
+      {
+        path: "login",
+        element: <Login />,
+      },
+      {
+        path: "signup",
+        element: <Register />,
+      },
+    ],
+  },
+]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
