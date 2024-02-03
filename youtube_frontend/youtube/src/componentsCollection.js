@@ -1,4 +1,4 @@
-import CreateVideo from "./components/Video/CreateVideo";
+import CreateVideo from "./components/video/CreateVideo";
 
 
 export {
