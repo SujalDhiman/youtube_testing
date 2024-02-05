@@ -5,8 +5,8 @@ import "./index.css";
 import store from "./reduxtoolkit/store.js";
 import { Provider } from "react-redux";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { Home, Login } from "./componentsCollection.js";
-import { Register } from "./components/user/Register.jsx";
+import { Home, Login,Register } from "./componentsCollection.js";
+
 
 const router = createBrowserRouter([
   {

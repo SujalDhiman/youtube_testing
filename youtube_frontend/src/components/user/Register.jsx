@@ -3,7 +3,9 @@ import { URL } from "../../endpoints";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
-export function Register() {
+
+
+export default function Register() {
   const { register, handleSubmit } = useForm();
   async function onSubmit(data) {
     const arr = [
@@ -26,13 +28,13 @@ export function Register() {
       avatar: data.avatar[0],
       coverImage: data.coverImage[0],
     };
-    console.log(payload);
+    
     const res = await axios.post(`${URL}/users/register`, payload, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
-    console.log(res);
+    toast(`${res.data.message}`)
   }
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

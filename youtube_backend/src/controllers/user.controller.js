@@ -42,32 +42,32 @@ export const registerUser=async function(req,res){
         success:false,
         message:"User already exists"})
 
-        
-        //check if image files are there or not
-        const avatarLocalPath=req.files?.avatar?.[0]?.path;
 
-        const coverImageLocalPath=req.files?.coverImage?.[0]?.path;
+
+        const avatarLocalPath=req.files.avatar[0].path;
+
+        const coverImageLocalPath=req.files.coverImage[0].path;
 
         if(!avatarLocalPath)
         return res.status(400).json({
         success:false,
-        message:"Cover Image is Required"})
+        message:"avatar is Required"})
 
         //upload them to cloudinary
         const avatar=await uploadOnCloudinary(avatarLocalPath)
 
-        console.log("response from cloudinary ",avatar)
         const coverImage=await uploadOnCloudinary(coverImageLocalPath)
+        
 
         if(!avatar)
-        return res.status(400).json({
+        return res.status(500).json({
         success:false,
         message:"avatar error"})
 
 
         //create entry for user
         const user=await User.create({fullName,avatar:{public_id:avatar.public_id,
-        url:avatar.secure_url},username,password,email,coverImage:{public_id:coverImage?.public_id || "" , url : coverImage?.secure_url || ""}})
+        url:avatar.secure_url},username,password,email,coverImage:{public_id:coverImage.public_id || "" , url : coverImage.secure_url || ""}})
         
         const createdUser=await User.findById(user._id).select("-password -refreshToken")
 
@@ -78,8 +78,7 @@ export const registerUser=async function(req,res){
 
         return res.status(200).json({
             success:true,
-            message:"User successfully registered",
-            createdUser
+            message:"User successfully registered", 
         })
             
     } catch (error) {
@@ -90,11 +89,12 @@ export const registerUser=async function(req,res){
 export const loginUser=async function (req,res){
 
     try {
+
         // grab the data
-        const {email,username="",password}=req.body
+        const {email,username,password}=req.body
         
-        console.log(email,username,password)
-        //find the user
+        
+        // //find the user
         const user=await User.findOne({$or:[{username},{email}]})
     
         if(!user)
@@ -116,8 +116,10 @@ export const loginUser=async function (req,res){
         const loggedInUser=await User.findById(user._id).select("-password -refreshToken")
 
         const options={
-            expiresIn:Date.now()+30*60*1000,
-            httpOnly:true
+            expiresIn:Date.now()+5*24*60*1000,
+            httpOnly:true,
+            sameSite:'None',
+            secure:true
         }
 
 
@@ -183,7 +185,7 @@ export const refreshAccessToken=async function (req,res){
 
         const options={
             expiresIn:Date.now()+30*60*1000,
-            httpOnly:true
+            httpOnly:true,
         }
 
         return res.status(200).cookie("accessToken",accessToken,options).cookie("refreshToken",refreshToken,options).json({
@@ -246,6 +248,23 @@ export const getCurrentUser=async function(req,res){
         data:user
     })
 
+}
+
+export const getInstantUser=async function(req,res){
+    try {
+        const {id}=req.params
+        
+        const user=await User.findById(id).select("-password -refreshToken")
+
+        return res.status(200).json({
+                success:true,
+                message:"data fetched successfully",
+                data:user
+        })
+
+    } catch (error) {
+        console.log("error occured in get instant user")
+    }
 }
 
 export const updateUserAvatar=async function(req,res){
