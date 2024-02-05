@@ -1,12 +1,14 @@
 import {useForm} from "react-hook-form"
 import axios from "axios"
 import { URL } from "../../endpoints"
+import {loginUser} from "../../reduxtoolkit/authSlice.js"
+import { useDispatch } from "react-redux"
 
 export default function Login()
 {
     const {handleSubmit,register}=useForm()
-
-    async function loginUser(data){
+    const dispatch=useDispatch()
+    async function loginCurrentUser(data){
 
 
         let payload={
@@ -15,17 +17,25 @@ export default function Login()
             password:data.password,
         }
 
-        // const response=await axios.post(`${URL}/users/login`,payload,{
-        //     headers:{
-        //         'Content-Type':'multipart/form-data'
-        //     }
-        // })
+        console.log(payload)
 
-        // console.log(response)
+        const response=await axios.post(`${URL}/users/login`,payload,{
+            headers:{
+                "Content-Type": "application/json",
+            },
+            withCredentials:true
+        })
+        
+        const userDetails=response.data.data
+        dispatch(loginUser(userDetails))
+
+        const accessToken=response.data.accessToken
+        localStorage.setItem("accessToken",accessToken)
+        localStorage.setItem("user-id",userDetails._id)
     }
 
     return (
-        <form onSubmit={handleSubmit(loginUser)}>
+        <form onSubmit={handleSubmit(loginCurrentUser)}>
             <input type="text" {...register("username")} placeholder="enter username"/>
             <br/>
             <input type="text" {...register("email")} placeholder="enter email"/>

@@ -8,6 +8,7 @@ import {
   getCurrentUser,
   updateUserAvatar,
   getUserChannelProfile,
+  getInstantUser
 } from "../controllers/user.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
@@ -43,5 +44,7 @@ router
 router
   .route("/getChannelProfile/:username")
   .get(verifyJWT, getUserChannelProfile);
+
+router.route("/getInstantUser/:id").get(getInstantUser)
 
 export default router;
