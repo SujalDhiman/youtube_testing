@@ -8,7 +8,8 @@ import axios from "axios";
 import { loginUser } from "../../reduxtoolkit/authSlice";
 
 export default function Home() {
-  const [videos, setVideos] = useState([]); //Intiallise all video
+
+  const [video, setVideo] = useState([]); //Intiallise all video
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
   const authStatus = useSelector((state) => state.auth.userStatus);
@@ -32,7 +33,7 @@ export default function Home() {
       withCredentials: true,
     });
     console.log(res.data);
-    setVideos(res.data);
+    setVideo(res.data.data)
   }
 
   //Login Status Remember
@@ -126,7 +127,7 @@ export default function Home() {
             </nav>
           </aside>
           </div>
-          {videos.length ? (
+          {video.length === 0 ? (
             <main className="flex-1 bg-white p-4 flex items-center justify-center">
               <div className="text-center">
                 <h2 className="text-3xl mb-4">No Video To show</h2>
@@ -136,9 +137,7 @@ export default function Home() {
               </div>
             </main>
           ) : (
-              {videos.map((ele) => (
-                <h1>video</h1>
-              ))}
+            video.map((ele)=><h1>Hello world</h1>)
           )}
       </div>
       <button

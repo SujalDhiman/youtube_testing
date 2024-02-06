@@ -9,15 +9,19 @@ export const createVideo = async function (req, res) {
   try {
     const { title, description, isPublished, owner } = req.body;
 
-    console.log(req.body.owner);
+    console.log(req.files)    
 
-    // const videoFileLocalPath = req.files.video[0].path;
+    const videoFileLocalPath = req.files.video[0].path;
+    const imageFileLocalPath=req.files.thumbnail[0].path;
+
+    console.log(videoFileLocalPath)
+    console.log(imageFileLocalPath)
 
     const videoFileAfterUpload = await uploadVideoOnCloudinary(
       videoFileLocalPath
     );
 
-    // const videoFileAfterUpload = await uploadOnCloudinary(videoFileLocalPath);
+    const thumbnailFileAfterUpload = await uploadOnCloudinary(imageFileLocalPath);
 
     const video = await Video.create({
       videoFile: {
@@ -80,7 +84,7 @@ export const getAllVideos = async function (req, res) {
       data: videos,
     });
   } catch (error) {
-    console.log("something went wrong in getting all videos");
+    console.log("something went wrong in getting all videos ",error.message);
   }
 };
 

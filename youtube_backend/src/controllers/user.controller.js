@@ -27,7 +27,7 @@ export const registerUser=async function(req,res){
         
         const {fullName,email,password,username}=req.body
 
-        //validation
+        console.log(req.files)
         if([fullName,email,password,username].some((ele)=>ele?.trim === ""))
             res.status(400).json({
             success:false,
