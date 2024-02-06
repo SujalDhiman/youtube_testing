@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { URL } from "../../endpoints";
 import { fileHandleHeader } from "../../../headersCollection";
+import { toast,ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 export function FileUpload({ setOpenModal }) {
   const userData = useSelector((state) => state.auth.userData);
@@ -11,6 +13,10 @@ export function FileUpload({ setOpenModal }) {
   console.log(userData)
 
   async function onSubmit(data) {
+
+    if(userData === null)
+    return toast("please login first to create video")
+
     let payload = {
       video: data.videoFile[0],
       thumbnail: data.thumbnail[0],
@@ -32,6 +38,7 @@ export function FileUpload({ setOpenModal }) {
     console.log(payload);
   }
   return (
+    <>
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="bg-gray-800 p-6 rounded-lg">
         {/**Close Button */}
@@ -111,5 +118,7 @@ export function FileUpload({ setOpenModal }) {
         </div>
       </div>
     </form>
+    <ToastContainer />
+    </>
   );
 }

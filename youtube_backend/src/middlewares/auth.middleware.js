@@ -8,10 +8,11 @@ export const verifyJWT=async  (req,res,next)=>{
     try {
         
         const token=req.cookies.accessToken 
+
         if(!token)
         return res.status(400).json({
         success:false,
-        message:"Unauthorized request"})
+        message:"Please login first"})
 
         const decodedToken=await jwt.verify(token,process.env.ACCESS_TOKEN_SECRET)
         

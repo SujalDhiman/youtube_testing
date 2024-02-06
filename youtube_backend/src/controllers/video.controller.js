@@ -33,7 +33,7 @@ export const createVideo = async function (req, res) {
       original_name: videoFileAfterUpload.original_filename,
     });
 
-    console.log(video);
+    
     res.status(200).json({
       success: true,
       message: "video successfully uploaded",
@@ -43,3 +43,7 @@ export const createVideo = async function (req, res) {
     console.log("error occured in create video ",error.message);
   }
 };
+
+export const getAllVideos=async function (req,res){
+
+}
