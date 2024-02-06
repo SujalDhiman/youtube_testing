@@ -13,7 +13,7 @@ export default function LogoutUser()
         })
         console.log(response)
         dispatch(logoutUser())
-        localStorage.removeItem("token")
+        localStorage.removeItem("accessToken")
         localStorage.removeItem("user-id")
     }
     return (<button onClick={logoutCurrentUser}>Logout</button>)

@@ -8,6 +8,8 @@ export function FileUpload({ setOpenModal }) {
   const userData = useSelector((state) => state.auth.userData);
   const { handleSubmit, register } = useForm();
 
+  console.log(userData)
+
   async function onSubmit(data) {
     let payload = {
       video: data.videoFile[0],
@@ -15,7 +17,7 @@ export function FileUpload({ setOpenModal }) {
       title: data.title,
       description: data.description,
       isPublished: data.isPublished,
-      onwer: userData._id,
+      owner: userData._id,
     };
 
     const response = await axios.post(`${URL}/video/createVideo`, payload, {

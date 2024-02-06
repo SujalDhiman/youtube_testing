@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { Video } from "../models/video.model.js";
-import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import { uploadOnCloudinary,uploadVideoOnCloudinary } from "../utils/cloudinary.js";
 
 export const createVideo = async function (req, res) {
   try {
@@ -10,7 +10,7 @@ export const createVideo = async function (req, res) {
 
     const thumbnailLocalPath = req.files.thumbnail[0].path;
 
-    const videoFileAfterUpload = await uploadOnCloudinary(videoFileLocalPath);
+    const videoFileAfterUpload = await uploadVideoOnCloudinary(videoFileLocalPath);
 
     const thumbnailFileAfterUpload = await uploadOnCloudinary(
       thumbnailLocalPath
@@ -29,7 +29,7 @@ export const createVideo = async function (req, res) {
       description,
       duration: videoFileAfterUpload.duration,
       isPublished,
-      owner: new mongoose.Types.ObjectId(owner),
+      owner,
       original_name: videoFileAfterUpload.original_filename,
     });
 
@@ -37,9 +37,9 @@ export const createVideo = async function (req, res) {
     res.status(200).json({
       success: true,
       message: "video successfully uploaded",
-      data: video,
+      data:video
     });
   } catch (error) {
-    console.log("error occured in create video");
+    console.log("error occured in create video ",error.message);
   }
 };
