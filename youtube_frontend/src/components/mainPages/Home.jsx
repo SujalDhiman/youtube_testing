@@ -1,22 +1,18 @@
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { LogoutUser } from "../../componentsCollection";
+import { LogoutUser, ShowVideo } from "../../componentsCollection";
 import { useEffect, useState } from "react";
 import { URL } from "../../endpoints";
 import axios from "axios";
 import { loginUser } from "../../reduxtoolkit/authSlice";
-import { ShowVideo } from "./componentsCollection.js";
 
 export default function Home() {
-  const videos = []; //For Incoming Videos to be Shown
-
+  const [videos, setVideos] = useState([]); //Intiallise all video
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
   const authStatus = useSelector((state) => state.auth.userStatus);
   const dispatch = useDispatch();
-
-  console.log(authStatus);
 
   async function loadUserDetails() {
     const user_id = localStorage.getItem("user-id");
@@ -30,15 +26,21 @@ export default function Home() {
     setUserData(response.data.data);
   }
 
+  //Function to get AllVideos from Backened
   async function getVideos() {
     const res = await axios.get(`${URL}/video/getAllVideo`, {
       withCredentials: true,
     });
     console.log(res.data);
+    setVideos(res.data);
   }
+
+  //Login Status Remember
   useEffect(() => {
     loadUserDetails();
   }, [authStatus]);
+
+  //To get videos at starting of page loading
   useEffect(() => {
     getVideos();
   }, []);
@@ -123,6 +125,7 @@ export default function Home() {
               </ul>
             </nav>
           </aside>
+          </div>
           {videos.length ? (
             <main className="flex-1 bg-white p-4 flex items-center justify-center">
               <div className="text-center">
@@ -133,13 +136,10 @@ export default function Home() {
               </div>
             </main>
           ) : (
-            <main className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {videos.map((el) => (
-                <ShowVideo key={el._id} video={el} />
+              {videos.map((ele) => (
+                <h1>video</h1>
               ))}
-            </main>
           )}
-        </div>
       </div>
       <button
         onClick={() => {
