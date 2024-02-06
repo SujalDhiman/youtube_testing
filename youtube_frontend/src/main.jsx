@@ -5,8 +5,8 @@ import "./index.css";
 import store from "./reduxtoolkit/store.js";
 import { Provider } from "react-redux";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { Home, Login,Register,Modal } from "./componentsCollection.js";
-
+import { Home, Login, Register, Modal } from "./componentsCollection.js";
+import { ParticularVideo } from "./components/Video/ParticularVideo.jsx";
 
 const router = createBrowserRouter([
   {
@@ -26,9 +26,13 @@ const router = createBrowserRouter([
         element: <Register />,
       },
       {
-        path:"modal",
-        element:<Modal />
-      }
+        path: "modal",
+        element: <Modal />,
+      },
+      {
+        path: "getParticularVideo/:id",
+        element: <ParticularVideo />,
+      },
     ],
   },
 ]);

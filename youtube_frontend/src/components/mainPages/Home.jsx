@@ -31,8 +31,8 @@ export default function Home() {
     const res = await axios.get(`${URL}/video/getAllVideo`, {
       withCredentials: true,
     });
-    console.log(res.data);
-    setVideos(res.data);
+    console.log(res.data.data);
+    setVideos(res.data.data);
   }
 
   //Login Status Remember
@@ -125,21 +125,25 @@ export default function Home() {
               </ul>
             </nav>
           </aside>
-          </div>
-          {videos.length ? (
-            <main className="flex-1 bg-white p-4 flex items-center justify-center">
-              <div className="text-center">
-                <h2 className="text-3xl mb-4">No Video To show</h2>
-                <p className="text-gray-600">
-                  Explore and enjoy your content here!
-                </p>
-              </div>
-            </main>
-          ) : (
-              {videos.map((ele) => (
-                <h1>video</h1>
-              ))}
-          )}
+          <>
+            {!videos.length ? (
+              <main className="flex-1 bg-white p-4 flex items-center justify-center">
+                <div className="text-center">
+                  <h2 className="text-3xl mb-4">No Video To show</h2>
+                  <p className="text-gray-600">
+                    Explore and enjoy your content here!
+                  </p>
+                </div>
+              </main>
+            ) : (
+              <main className="flex flex-row justify-evenly items-start gap-7 flex-wrap p-4">
+                {videos.map((el) => (
+                  <ShowVideo key={el._id} video={el} className="w-full" />
+                ))}
+              </main>
+            )}
+          </>
+        </div>
       </div>
       <button
         onClick={() => {

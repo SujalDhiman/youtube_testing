@@ -1,20 +1,27 @@
-import express from "express"
-import { createVideo,getAllVideos } from "../controllers/video.controller.js"
-import { upload } from "../middlewares/multer.middleware.js"
-import { verifyJWT } from "../middlewares/auth.middleware.js"
-const router=express.Router()
+import express from "express";
+import {
+  createVideo,
+  getAllVideos,
+  getRequiredVideo,
+} from "../controllers/video.controller.js";
+import { upload } from "../middlewares/multer.middleware.js";
+import { verifyJWT } from "../middlewares/auth.middleware.js";
+const router = express.Router();
 
-
-
-router.route("/createVideo").post(verifyJWT,upload.fields([
+router.route("/createVideo").post(
+  verifyJWT,
+  upload.fields([
     {
-        name:"video"
+      name: "video",
     },
     {
-        name:"thumbnail"
-    }
-]),createVideo)
+      name: "thumbnail",
+    },
+  ]),
+  createVideo
+);
 
-router.route("/getAllVideo").get(getAllVideos)
+router.route("/getAllVideo").get(getAllVideos);
 
-export default router
+router.route("/getParticularVideo/:id").get(getRequiredVideo);
+export default router;
