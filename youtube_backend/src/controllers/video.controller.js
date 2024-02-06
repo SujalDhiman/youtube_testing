@@ -86,7 +86,7 @@ export const getAllVideos = async function (req, res) {
       data: videos,
     });
   } catch (error) {
-    console.log("something went wrong in getting all videos");
+    console.log("something went wrong in getting all videos ", error.message);
   }
 };
 

@@ -8,7 +8,8 @@ import axios from "axios";
 import { loginUser } from "../../reduxtoolkit/authSlice";
 
 export default function Home() {
-  const [videos, setVideos] = useState([]); //Intiallise all video
+
+  const [video, setVideo] = useState([]); //Intiallise all video
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
   const authStatus = useSelector((state) => state.auth.userStatus);
@@ -31,8 +32,13 @@ export default function Home() {
     const res = await axios.get(`${URL}/video/getAllVideo`, {
       withCredentials: true,
     });
+<<<<<<< HEAD
     console.log(res.data.data);
     setVideos(res.data.data);
+=======
+    console.log(res.data);
+    setVideo(res.data.data)
+>>>>>>> e73955b32b38ed080f586e13822a58a881d69a0e
   }
 
   //Login Status Remember
@@ -125,6 +131,7 @@ export default function Home() {
               </ul>
             </nav>
           </aside>
+<<<<<<< HEAD
           <>
             {!videos.length ? (
               <main className="flex-1 bg-white p-4 flex items-center justify-center">
@@ -144,6 +151,21 @@ export default function Home() {
             )}
           </>
         </div>
+=======
+          </div>
+          {video.length === 0 ? (
+            <main className="flex-1 bg-white p-4 flex items-center justify-center">
+              <div className="text-center">
+                <h2 className="text-3xl mb-4">No Video To show</h2>
+                <p className="text-gray-600">
+                  Explore and enjoy your content here!
+                </p>
+              </div>
+            </main>
+          ) : (
+            video.map((ele)=><h1>Hello world</h1>)
+          )}
+>>>>>>> e73955b32b38ed080f586e13822a58a881d69a0e
       </div>
       <button
         onClick={() => {
