@@ -5,7 +5,7 @@ import "./index.css";
 import store from "./reduxtoolkit/store.js";
 import { Provider } from "react-redux";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { Home, Login,Register } from "./componentsCollection.js";
+import { Home, Login,Register,Modal } from "./componentsCollection.js";
 
 
 const router = createBrowserRouter([
@@ -25,6 +25,10 @@ const router = createBrowserRouter([
         path: "signup",
         element: <Register />,
       },
+      {
+        path:"modal",
+        element:<Modal />
+      }
     ],
   },
 ]);

@@ -143,11 +143,12 @@ export const logoutUser=async function (req,res){
         {
             new:true
         })
+        
     let options={
         expiresIn:Date.now(),
         httpOnly:true
     }
-    res.status(200).clearCookie("accessToken",options).clearCookie("refreshToken",options).json({
+    return res.status(200).clearCookie("accessToken",options).clearCookie("refreshToken",options).json({
         success:true,
         message:"Successfully Logged Out",
         data:user

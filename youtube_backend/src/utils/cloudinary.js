@@ -13,12 +13,36 @@ const uploadOnCloudinary=async (localFilePath)=>{
     try {
         console.log("inside upload ",localFilePath )
         if(!localFilePath) return null;
+        console.log("final path is not null")
         const response=await cloudinary.uploader.upload(localFilePath,
             {
                 folder:"videoTube",
-                resource_type:"auto"
+                resource_type:"image"
+
             })
         
+        console.log("successfully uploaded")
+        fs.unlinkSync(localFilePath)
+        return response
+        
+    } catch (error) {
+        return null
+    }
+}
+
+const uploadVideoOnCloudinary=async (localFilePath)=>{
+
+    try {
+        console.log("inside upload video ",localFilePath )
+        if(!localFilePath) return null;
+        console.log("final path of video is not null")
+        const response=await cloudinary.uploader.upload(localFilePath,
+            {
+                folder:"videoCollection",
+                resource_type:"video",
+            })
+        
+        console.log("successfully uploaded")
         fs.unlinkSync(localFilePath)
         return response
         
@@ -45,4 +69,4 @@ const deleteFileFromCloudinary=async (fileURL)=>{
 
 }
 
-export {uploadOnCloudinary,deleteFileFromCloudinary}
+export {uploadOnCloudinary,deleteFileFromCloudinary,uploadVideoOnCloudinary}

@@ -26,6 +26,7 @@ export default function Login()
             withCredentials:true
         })
         
+        console.log(response)
         const userDetails=response.data.data
         dispatch(loginUser(userDetails))
 

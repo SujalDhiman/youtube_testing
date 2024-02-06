@@ -3,20 +3,26 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { URL } from "../../endpoints";
 import { fileHandleHeader } from "../../../headersCollection";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export function FileUpload({ setOpenModal }) {
   const userData = useSelector((state) => state.auth.userData);
   console.log(userData);
   const { handleSubmit, register } = useForm();
 
+  console.log(userData);
+
   async function onSubmit(data) {
+    if (userData === null) return toast("please login first to create video");
+
     let payload = {
       video: data.videoFile[0],
       thumbnail: data.thumbnail[0],
       title: data.title,
       description: data.description,
       isPublished: data.isPublished,
-      onwer: userData._id,
+      owner: userData._id,
     };
 
     const response = await axios.post(`${URL}/video/createVideo`, payload, {
@@ -31,37 +37,31 @@ export function FileUpload({ setOpenModal }) {
     console.log(payload);
   }
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-opacity-60 bg-red-600">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="w-full max-w-md mx-auto"
-      >
-        <div className="bg-gray-800 p-8 rounded-lg">
+    <>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="bg-gray-800 p-6 rounded-lg">
           {/**Close Button */}
           <button
-            className="absolute top-2 right-2 text-white hover:text-gray-300 focus:outline-none"
+            className="absolute top-2 right-2 text-white"
             onClick={() => setOpenModal(false)}
           >
             X
           </button>
           {/**Video Select*/}
-          <div className="mb-6">
-            <label htmlFor="video" className="block text-white mb-2">
-              Video
-            </label>
-            <input
-              type="file"
-              id="video"
-              className="hidden"
-              {...register("videoFile")}
-            />
-            <label
-              htmlFor="video"
-              className="cursor-pointer bg-slate-700 text-white py-2 px-4 rounded-lg text-center"
-            >
-              Click To Upload
-            </label>
-          </div>
+
+          <input
+            type="file"
+            name="upload"
+            id="image"
+            className="hidden"
+            {...register("videoFile")}
+          />
+
+          <label htmlFor="image" className="cursor-pointer ">
+            <div className="p-4 bg-slate-700 text-white text-center cursor-pointer m-3">
+              <p className="mt-2">Click To Upload</p>
+            </div>
+          </label>
           {/**Thumbnail Select*/}
           <div className="mb-6">
             <label htmlFor="thumbnail" className="block text-white mb-2">
@@ -134,6 +134,7 @@ export function FileUpload({ setOpenModal }) {
           </div>
         </div>
       </form>
-    </div>
+      <ToastContainer />
+    </>
   );
 }
