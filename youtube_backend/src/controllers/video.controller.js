@@ -45,5 +45,48 @@ export const createVideo = async function (req, res) {
 };
 
 export const getAllVideos=async function (req,res){
+    try {
+
+      const videos=await Video.aggregate(
+        [
+          {
+            $lookup: {
+              from: "users",
+              localField: "owner",
+              foreignField: "_id",
+              as: "userData",
+              pipeline:[
+                {
+                  $project:{
+                      username:1,
+                      avatar:1
+                  }
+                }
+              ]
+            }
+          },
+          {
+            $unwind:"$userData"
+          },
+          {
+            $project:{
+              owner:0
+            }
+          }
+      ]
+    )
+    return res.status(200).json({
+        success:true,
+        message:"Data successfully retrieved",
+        data:videos
+    })
+    } catch (error) {
+      console.log("something went wrong in getting all videos")      
+    }
+}
+
+export const getRequiredVideo=async function (req,res){
+
+    return res.status(200).send("data is sent")
 
 }
