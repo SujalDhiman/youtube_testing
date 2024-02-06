@@ -65,7 +65,9 @@ export default function Home() {
     //           </button>{" "}
     //         </div>
     //       ) : (
-    //         <LogoutUser />
+    //         <>
+    //           <LogoutUser />
+    //         </>
     //       )}
     //     </div>
     //   </header>
