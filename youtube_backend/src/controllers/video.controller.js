@@ -93,7 +93,6 @@ export const getAllVideos = async function (req, res) {
 export const getRequiredVideo = async function (req, res) {
   try {
     const { id } = req.params;
-    console.log(id);
     const video = await Video.aggregate([
       {
         $match: {
