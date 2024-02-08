@@ -8,8 +8,7 @@ import axios from "axios";
 import { loginUser } from "../../reduxtoolkit/authSlice";
 
 export default function Home() {
-
-  const [video, setVideo] = useState([]); //Intiallise all video
+  const [video, setVideos] = useState([]); //Intiallise all video
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
   const authStatus = useSelector((state) => state.auth.userStatus);
@@ -32,8 +31,8 @@ export default function Home() {
     const res = await axios.get(`${URL}/video/getAllVideo`, {
       withCredentials: true,
     });
-    console.log(res.data);
-    setVideo(res.data.data)
+    console.log(res.data.data);
+    setVideos(res.data.data);
   }
 
   //Login Status Remember
@@ -41,7 +40,7 @@ export default function Home() {
     loadUserDetails();
   }, [authStatus]);
 
-  //To get videos at starting of page loading
+  // To get videos at starting of page loading
   useEffect(() => {
     getVideos();
   }, []);
@@ -126,19 +125,25 @@ export default function Home() {
               </ul>
             </nav>
           </aside>
-          </div>
-          {video.length === 0 ? (
-            <main className="flex-1 bg-white p-4 flex items-center justify-center">
-              <div className="text-center">
-                <h2 className="text-3xl mb-4">No Video To show</h2>
-                <p className="text-gray-600">
-                  Explore and enjoy your content here!
-                </p>
-              </div>
-            </main>
-          ) : (
-            video.map((ele)=><ShowVideo video={ele}/>)
-          )}
+          <>
+            {!video.length ? (
+              <main className="flex-1 bg-white p-4 flex items-center justify-center">
+                <div className="text-center">
+                  <h2 className="text-3xl mb-4">No Video To show</h2>
+                  <p className="text-gray-600">
+                    Explore and enjoy your content here!{video.length}
+                  </p>
+                </div>
+              </main>
+            ) : (
+              <main className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+                {video.map((el) => (
+                  <ShowVideo key={el._id} video={el} className="w-full" />
+                ))}
+              </main>
+            )}
+          </>
+        </div>
       </div>
       <button
         onClick={() => {

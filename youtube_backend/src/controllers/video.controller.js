@@ -9,19 +9,21 @@ export const createVideo = async function (req, res) {
   try {
     const { title, description, isPublished, owner } = req.body;
 
-    console.log(req.files)    
+    console.log(req.files);
 
     const videoFileLocalPath = req.files.video[0].path;
-    const imageFileLocalPath=req.files.thumbnail[0].path;
+    const imageFileLocalPath = req.files.thumbnail[0].path;
 
-    console.log(videoFileLocalPath)
-    console.log(imageFileLocalPath)
+    console.log(videoFileLocalPath);
+    console.log(imageFileLocalPath);
 
     const videoFileAfterUpload = await uploadVideoOnCloudinary(
       videoFileLocalPath
     );
 
-    const thumbnailFileAfterUpload = await uploadOnCloudinary(imageFileLocalPath);
+    const thumbnailFileAfterUpload = await uploadOnCloudinary(
+      imageFileLocalPath
+    );
 
     const video = await Video.create({
       videoFile: {
@@ -84,10 +86,51 @@ export const getAllVideos = async function (req, res) {
       data: videos,
     });
   } catch (error) {
-    console.log("something went wrong in getting all videos ",error.message);
+    console.log("something went wrong in getting all videos ", error.message);
   }
 };
 
 export const getRequiredVideo = async function (req, res) {
-  return res.status(200).send("data is sent");
+  try {
+    const { id } = req.params;
+    const video = await Video.aggregate([
+      {
+        $match: {
+          _id: new mongoose.Types.ObjectId(id),
+        },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "owner",
+          foreignField: "_id",
+          as: "userData",
+          pipeline: [
+            {
+              $project: {
+                username: 1,
+                avatar: 1,
+              },
+            },
+          ],
+        },
+      },
+      {
+        $unwind: "$userData",
+      },
+      {
+        $project: {
+          owner: 0,
+        },
+      },
+    ]);
+
+    return res.status(200).json({
+      success: true,
+      message: "video details fetched",
+      data: video,
+    });
+  } catch (error) {
+    console.log("error in getting required video ", error.message);
+  }
 };
