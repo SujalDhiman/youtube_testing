@@ -79,7 +79,17 @@ export default function Home() {
                 </button>{" "}
               </div>
             ) : (
-              <LogoutUser />
+              <div className="flex items-center ">
+                <button
+                  onClick={() => {
+                    navigate("/modal");
+                  }}
+                  className="w-6 bg-white rounded-full text-red-500 mr-4"
+                >
+                  +
+                </button>
+                <LogoutUser />
+              </div>
             )}
           </div>
         </header>
@@ -88,12 +98,18 @@ export default function Home() {
             <nav>
               <ul>
                 <li className="mb-4">
-                  <NavLink to="/" className="flex items-center">
+                  <NavLink
+                    to="/Home"
+                    className="flex items-center"
+                    style={(isActive) => ({
+                      color: isActive ? "green" : "blue",
+                    })}
+                  >
                     <i className="fas fa-home mr-2"></i> Home
                   </NavLink>
                 </li>
                 <li className="mb-4">
-                  <NavLink to="/liked" className="flex items-center">
+                  <NavLink to="/likedVideos" className="flex items-center">
                     <i className="fas fa-thumbs-up mr-2"></i> Liked Videos
                   </NavLink>
                 </li>
@@ -103,13 +119,13 @@ export default function Home() {
                   </NavLink>
                 </li>
                 <li className="mb-4">
-                  <NavLink to="/mycontent" className="flex items-center">
-                    <i className="fas fa-file-alt mr-2"></i> My Content
+                  <NavLink to="/myChannel" className="flex items-center">
+                    <i className="fas fa-file-alt mr-2"></i> My Channel
                   </NavLink>
                 </li>
                 <li className="mb-4">
-                  <NavLink to="/collection" className="flex items-center">
-                    <i className="fas fa-folder mr-2"></i> Collection
+                  <NavLink to="/PlayList" className="flex items-center">
+                    <i className="fas fa-folder mr-2"></i> PlayList
                   </NavLink>
                 </li>
                 <li className="mb-4">
@@ -145,13 +161,6 @@ export default function Home() {
           </>
         </div>
       </div>
-      <button
-        onClick={() => {
-          navigate("/modal");
-        }}
-      >
-        Modal
-      </button>
     </>
   );
 }

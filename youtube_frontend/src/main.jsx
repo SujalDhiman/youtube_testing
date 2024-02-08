@@ -33,6 +33,10 @@ const router = createBrowserRouter([
         path: "getParticularVideo/:id",
         element: <ParticularVideo />,
       },
+      {
+        path: "*",
+        element: <p className="flex justify-center">Route Under Development</p>,
+      },
     ],
   },
 ]);
