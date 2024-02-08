@@ -1,8 +1,16 @@
 import { Likes } from "../utils/Likes"; // Import the LikeComponent
 
 export function VideoDisplay({ video }) {
-  const { userData, title, description, views, createdAt, videoFile, _id } =
-    video;
+  const {
+    userData,
+    title,
+    description,
+    views,
+    createdAt,
+    videoFile,
+    _id,
+    likescount = 0,
+  } = video;
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center">
       <video

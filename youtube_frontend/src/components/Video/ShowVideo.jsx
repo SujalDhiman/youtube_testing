@@ -5,8 +5,11 @@ export function ShowVideo({ video }) {
   const { thumbnail, title, views = 0, userData, createdAt, _id } = video;
 
   return (
-    <Link to={`/getParticularVideo/${_id}`}>
-      <div className="bg-white p-4 rounded-lg shadow-lg">
+    <Link
+      to={`/getParticularVideo/${_id}`}
+      className="bg-white p-4 rounded-lg shadow-lg w-full h-fit"
+    >
+      <div>
         <div className="mb-4">
           <img
             src={thumbnail.secure_url}

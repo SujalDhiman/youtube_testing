@@ -97,12 +97,13 @@ export default function Home() {
           <aside className="w-1/4 bg-black text-white p-4">
             <nav>
               <ul>
-                <li className="mb-4">
+                <li className="mb-4 w-full ">
                   <NavLink
                     to="/Home"
-                    className="flex items-center"
+                    className="flex items-center rounded-lg "
                     style={(isActive) => ({
-                      color: isActive ? "green" : "blue",
+                      backgroundColor: isActive ? "white" : "",
+                      color: isActive ? "red" : "",
                     })}
                   >
                     <i className="fas fa-home mr-2"></i> Home
