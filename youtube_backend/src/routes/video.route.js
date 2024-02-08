@@ -23,12 +23,5 @@ router.route("/createVideo").post(
 
 router.route("/getAllVideo").get(getAllVideos);
 
-<<<<<<< HEAD
-router.route("/getParticularVideo/:id")
-
-
-export default router
-=======
 router.route("/getParticularVideo/:id").get(getRequiredVideo);
 export default router;
->>>>>>> d76de65359729086d082b3c49848f8b7954d70ff
