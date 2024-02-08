@@ -1,8 +1,8 @@
 import { Likes } from "../utils/Likes"; // Import the LikeComponent
 
 export function VideoDisplay({ video }) {
-  const { userData, title, description, views, createdAt, videoFile } = video;
-
+  const { userData, title, description, views, createdAt, videoFile, _id } =
+    video;
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center">
       <video
@@ -48,11 +48,7 @@ export function VideoDisplay({ video }) {
 
       {/* Like Component */}
       <div className="flex items-center mt-4">
-        <Likes
-          videoId={videoFile.public_id}
-          initialLikes={0}
-          initialLiked={0}
-        />
+        <Likes videoId={_id} initialLikes={0} initialLiked={0} />
       </div>
     </div>
   );

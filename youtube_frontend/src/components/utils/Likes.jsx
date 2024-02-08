@@ -1,18 +1,32 @@
 import { useState } from "react";
-
+import { URL } from "../../endpoints";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 export function Likes({ videoId, initialLikes, initialLiked }) {
   const [likes, setLikes] = useState(initialLikes);
   const [liked, setLiked] = useState(initialLiked);
-
-  const handleLike = () => {
+  const { _id } = useSelector((state) => state.auth.userData);
+  const handleLike = async () => {
     if (!liked) {
       setLikes(likes + 1);
       setLiked(true);
-      console.log(videoId + ": liked");
+      const res = await axios.post(`${URL}/like/likeVideo`, {
+        videoId,
+        ownerId: _id,
+        likeState: true,
+      });
+      console.log(res);
     } else {
       setLikes(likes - 1);
       setLiked(false);
+      const res = await axios.post(`${URL}/like/likeVideo`, {
+        videoId,
+        ownerId: _id,
+        likeState: false,
+      });
       console.log(videoId + ": unliked");
+      console.log(res);
     }
   };
 
