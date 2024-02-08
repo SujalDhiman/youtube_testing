@@ -137,7 +137,7 @@ export default function Home() {
               </div>
             </main>
           ) : (
-            video.map((ele)=><h1>Hello world</h1>)
+            video.map((ele)=><ShowVideo video={ele}/>)
           )}
       </div>
       <button

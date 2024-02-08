@@ -17,4 +17,7 @@ router.route("/createVideo").post(verifyJWT,upload.fields([
 
 router.route("/getAllVideo").get(getAllVideos)
 
+router.route("/getParticularVideo/:id")
+
+
 export default router
