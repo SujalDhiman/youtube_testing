@@ -23,5 +23,5 @@ router.route("/createVideo").post(
 
 router.route("/getAllVideo").get(getAllVideos);
 
-router.route("/getParticularVideo/:id").get(getRequiredVideo);
+router.route("/getParticularVideo/:id").post(getRequiredVideo);
 export default router;

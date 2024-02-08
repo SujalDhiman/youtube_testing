@@ -93,7 +93,7 @@ export const getAllVideos = async function (req, res) {
 export const getRequiredVideo = async function (req, res) {
   try {
     const { id } = req.params;
-    const {userId} =req.body
+    const { userId } = req.body;
     const video = await Video.aggregate([
       {
           $match:{
@@ -117,40 +117,45 @@ export const getRequiredVideo = async function (req, res) {
           ],
         },
       },
-  		{
+      {
         $lookup: {
           from: "likes",
           localField: "_id",
           foreignField: "video",
-          as: "totalLikes"
-        }
+          as: "totalLikes",
+        },
       },
       {
         $unwind: "$userData",
       },
-  		{
-    		$addFields: {
-    		  likes:{
-            $size:"$totalLikes"
+      {
+        $addFields: {
+          likes: {
+            $size: "$totalLikes",
           },
-          likedByUser:{
-            $cond:{
-              if:{
-                $in:[new mongoose.Types.ObjectId(userId),"$totalLikes.likedBy"]
+          likedByUser: {
+            $cond: {
+              if: {
+                $in: [
+                  new mongoose.Types.ObjectId(userId),
+                  "$totalLikes.likedBy",
+                ],
               },
-              then:true,
-              else:false
-            }
-          }
-    		}
-  		},
+              then: true,
+              else: false,
+            },
+          },
+        },
+      },
       {
         $project: {
           owner: 0,
-          totalLikes:0
+          totalLikes: 0,
         },
-      }
-]);
+      },
+    ]);
+
+    console.log("get video data ", video);
 
     return res.status(200).json({
       success: true,
