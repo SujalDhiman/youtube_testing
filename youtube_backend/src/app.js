@@ -35,4 +35,7 @@ app.get("/check",(req,res)=>{
 import videoRouter from "../src/routes/video.route.js"
 app.use("/api/v1/video",videoRouter)
 
+
+import likeRouter from "../src/routes/likes.route.js"
+app.use("/api/v1/like",likeRouter)
 export {app}
