@@ -4,7 +4,6 @@ import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 
-
 export default function Register() {
   const { register, handleSubmit } = useForm();
   async function onSubmit(data) {
@@ -28,16 +27,131 @@ export default function Register() {
       avatar: data.avatar[0],
       coverImage: data.coverImage[0],
     };
-    
+
     const res = await axios.post(`${URL}/users/register`, payload, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
-    toast(`${res.data.message}`)
+    toast(`${res.data.message}`);
   }
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <div className="flex flex-col items-center justify-center h-screen bg-gray-200">
+      <div className="bg-white p-10 rounded-lg shadow-lg">
+        <h1 className="text-3xl font-bold mb-2">Signup</h1>
+        <form className="space-y-2" onSubmit={handleSubmit(onSubmit)}>
+          <div>
+            <label
+              htmlFor="username"
+              className="block text-gray-800 font-bold mb-2"
+            >
+              Username
+            </label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              className="w-full border border-gray-300 p-2 rounded-lg"
+              placeholder="Enter your username"
+              {...register("username")}
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-gray-800 font-bold mb-2"
+            >
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              className="w-full border border-gray-300 p-2 rounded-lg"
+              placeholder="Enter your email address"
+              {...register("email")}
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="fullName"
+              className="block text-gray-800 font-bold mb-2"
+            >
+              Full Name
+            </label>
+            <input
+              type="text"
+              id="fullName"
+              name="fullName"
+              className="w-full border border-gray-300 p-2 rounded-lg"
+              placeholder="Enter your full name"
+              {...register("fullName")}
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="file1"
+              className="block text-gray-800 font-bold mb-2"
+            >
+              File Choose
+            </label>
+            <input
+              type="file"
+              id="file1"
+              name="file1"
+              className="w-full border border-gray-300 p-2 rounded-lg"
+              {...register("avatar")}
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="file2"
+              className="block text-gray-800 font-bold mb-2"
+            >
+              File Choose
+            </label>
+            <input
+              type="file"
+              id="file2"
+              name="file2"
+              className="w-full border border-gray-300 p-2 rounded-lg"
+              {...register("coverImage")}
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="password"
+              className="block text-gray-800 font-bold mb-2"
+            >
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              className="w-full border border-gray-300 p-2 rounded-lg"
+              placeholder="Enter your password"
+              {...register("password")}
+            />
+          </div>
+          <div>
+            <button
+              type="submit"
+              className="w-full rounded-3xl bg-black px-6 py-2 text-xl font-medium uppercase text-white"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+      <ToastContainer />
+    </div>
+  );
+}
+
+//previous code
+{
+  /* <form onSubmit={handleSubmit(onSubmit)}>
       <label htmlFor="username">Username:</label>
       <input
         type="text"
@@ -65,7 +179,6 @@ export default function Register() {
         {...register("password")}
       />
       <button type="submit">Submit</button>
-      <ToastContainer />
     </form>
-  );
+  ); */
 }

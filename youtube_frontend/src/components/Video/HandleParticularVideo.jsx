@@ -2,9 +2,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { URL } from "../../endpoints";
-import { VideoDisplay } from "./VideoDisplay";
+import { VideoDisplay } from "./DisplayOneVideo";
 import { useSelector } from "react-redux";
 import { jsonHandleHeader } from "../../../headersCollection";
+import { Comment } from "../utils/Comments";
 
 export function ParticularVideo() {
   const userData = useSelector((state) => state.auth.userData);
@@ -34,5 +35,17 @@ export function ParticularVideo() {
     fetchThisVideo();
   }, [id, userData]);
 
-  return <>{video && <VideoDisplay video={video} />}</>;
+  useEffect(() => {}, []);
+
+  return (
+    <>
+      {video && <VideoDisplay video={video} />}
+      {/* Comment Componenet */}
+      <Comment
+        username="User123"
+        timestamp="2 hours ago"
+        commentText="This is a great video!"
+      />
+    </>
+  );
 }

@@ -94,51 +94,121 @@ export default function Home() {
           </div>
         </header>
         <div className="flex flex-1">
-          <aside className="w-1/4 bg-black text-white p-4">
+          <aside className="w-1/4 bg-black text-white py-2">
             <nav>
               <ul>
-                <li className="mb-4 w-full ">
-                  <NavLink
-                    to="/Home"
-                    className="flex items-center rounded-lg "
-                    style={(isActive) => ({
-                      backgroundColor: isActive ? "white" : "",
-                      color: isActive ? "red" : "",
-                    })}
-                  >
+                <NavLink
+                  to="/Home"
+                  className={({ isActive, isPending }) =>
+                    isPending ? "pending" : isActive ? "active" : ""
+                  }
+                  style={({ isActive }) => {
+                    return {
+                      background: isActive ? "white" : "pink",
+                      color: isActive ? "red" : "yellow",
+                    };
+                  }}
+                >
+                  <li className="mb-4 w-full">
                     <i className="fas fa-home mr-2"></i> Home
-                  </NavLink>
-                </li>
-                <li className="mb-4">
-                  <NavLink to="/likedVideos" className="flex items-center">
+                  </li>
+                </NavLink>
+                <NavLink
+                  to="/likedVideos"
+                  className={({ isActive, isPending }) =>
+                    isPending ? "pending" : isActive ? "active" : ""
+                  }
+                  style={({ isActive }) => {
+                    return {
+                      color: isActive ? "red" : "yellow",
+                      backgroundColor: isActive ? "white" : "",
+                    };
+                  }}
+                >
+                  <li className="mb-4">
                     <i className="fas fa-thumbs-up mr-2"></i> Liked Videos
-                  </NavLink>
-                </li>
-                <li className="mb-4">
-                  <NavLink to="/history" className="flex items-center">
+                  </li>
+                </NavLink>
+                <NavLink
+                  to="/history"
+                  className={({ isActive, isPending }) =>
+                    isPending ? "pending" : isActive ? "active" : ""
+                  }
+                  style={({ isActive }) => {
+                    return {
+                      color: isActive ? "red" : "yellow",
+                      backgroundColor: isActive ? "white" : "",
+                    };
+                  }}
+                >
+                  <li className="mb-4">
                     <i className="fas fa-history mr-2"></i> History
-                  </NavLink>
-                </li>
-                <li className="mb-4">
-                  <NavLink to="/myChannel" className="flex items-center">
+                  </li>
+                </NavLink>
+                <NavLink
+                  to="/myChannel"
+                  className={({ isActive, isPending }) =>
+                    isPending ? "pending" : isActive ? "active" : ""
+                  }
+                  style={({ isActive }) => {
+                    return {
+                      color: isActive ? "red" : "yellow",
+                      backgroundColor: isActive ? "white" : "",
+                    };
+                  }}
+                >
+                  <li className="mb-4">
                     <i className="fas fa-file-alt mr-2"></i> My Channel
-                  </NavLink>
-                </li>
-                <li className="mb-4">
-                  <NavLink to="/PlayList" className="flex items-center">
+                  </li>
+                </NavLink>
+                <NavLink
+                  to="/PlayList"
+                  className={({ isActive, isPending }) =>
+                    isPending ? "pending" : isActive ? "active" : ""
+                  }
+                  style={({ isActive }) => {
+                    return {
+                      color: isActive ? "red" : "yellow",
+                      backgroundColor: isActive ? "white" : "",
+                    };
+                  }}
+                >
+                  <li className="mb-4">
                     <i className="fas fa-folder mr-2"></i> PlayList
-                  </NavLink>
-                </li>
-                <li className="mb-4">
-                  <NavLink to="/subscribers" className="flex items-center">
+                  </li>
+                </NavLink>
+                <NavLink
+                  to="/subscribers"
+                  className={({ isActive, isPending }) =>
+                    isPending ? "pending" : isActive ? "active" : ""
+                  }
+                  style={({ isActive }) => {
+                    return {
+                      color: isActive ? "red" : "yellow",
+                      backgroundColor: isActive ? "white" : "",
+                    };
+                  }}
+                >
+                  <li className="mb-4">
                     <i className="fas fa-users mr-2"></i> Subscribers
-                  </NavLink>
-                </li>
-                <li className="mt-auto">
-                  <NavLink to="/settings" className="flex items-center">
+                  </li>
+                </NavLink>
+                <NavLink
+                  to="/settings"
+                  className={({ isActive, isPending }) =>
+                    isPending ? "pending" : isActive ? "active" : ""
+                  }
+                  style={({ isActive }) => {
+                    return {
+                      color: isActive ? "red" : "yellow",
+                      backgroundColor: isActive ? "white" : "",
+                    };
+                  }}
+                >
+                  <li className="mt-auto">
                     <i className="fas fa-cog mr-2"></i> Settings
-                  </NavLink>
-                </li>
+                  </li>
+                </NavLink>
               </ul>
             </nav>
           </aside>
@@ -165,3 +235,22 @@ export default function Home() {
     </>
   );
 }
+
+//className="flex items-center rounded-lg "
+
+<li className="mb-4 w-full">
+  <div
+    style={({ isActive }) => ({
+      backgroundColor: isActive ? "gray" : "", // Set your desired background color
+    })}
+  >
+    <NavLink
+      to="/Home"
+      style={({ isActive }) => ({
+        color: isActive ? "red" : "yellow",
+      })}
+    >
+      <i className="fas fa-home mr-2"></i> Home
+    </NavLink>
+  </div>
+</li>;

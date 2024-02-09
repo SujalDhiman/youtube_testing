@@ -6,7 +6,7 @@ import store from "./reduxtoolkit/store.js";
 import { Provider } from "react-redux";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Home, Login, Register, Modal } from "./componentsCollection.js";
-import { ParticularVideo } from "./components/Video/ParticularVideo.jsx";
+import { ParticularVideo } from "./components/Video/HandleParticularVideo.jsx";
 
 const router = createBrowserRouter([
   {
