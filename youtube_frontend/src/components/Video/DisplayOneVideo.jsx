@@ -9,7 +9,8 @@ export function VideoDisplay({ video }) {
     createdAt,
     videoFile,
     _id,
-    likescount = 0,
+    likes,
+    likedByUser,
   } = video;
   return (
     <div className="min-h-screen bg-red-400">
@@ -60,7 +61,7 @@ export function VideoDisplay({ video }) {
 
       {/* Like Component */}
       <div className="flex items-center mt-4">
-        <Likes videoId={_id} initialLikes={0} initialLiked={0} />
+        <Likes videoId={_id} initialLikes={likes} initialLiked={likedByUser} />
       </div>
     </div>
   );

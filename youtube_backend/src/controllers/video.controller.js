@@ -96,9 +96,9 @@ export const getRequiredVideo = async function (req, res) {
     const { userId } = req.body;
     const video = await Video.aggregate([
       {
-        $match: {
-          _id: new mongoose.Types.ObjectId(id),
-        },
+          $match:{
+            _id:new mongoose.Types.ObjectId(id)
+          }
       },
       {
         $lookup: {

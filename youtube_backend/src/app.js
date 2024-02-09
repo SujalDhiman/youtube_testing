@@ -26,8 +26,6 @@ import userRouter from "./routes/user.routes.js"
 
 app.use("/api/v1/users",userRouter)
 app.get("/check",(req,res)=>{
-    
-    console.log(req.query)
 
     res.status(200).send("checking something")
 })
