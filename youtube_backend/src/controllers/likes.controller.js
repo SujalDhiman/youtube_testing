@@ -24,10 +24,13 @@ export const likeVideo = async function (req, res) {
         });
       }
     } else {
+
       const findTheUser = await Likes.findOne({
         likedBy: new mongoose.Types.ObjectId(ownerId),
       });
-      console.log("dislike ke andar ", findTheUser);
+      
+      console.log(findTheUser)
+
       if (findTheUser) {
         const deleteUser = await Likes.findByIdAndDelete(findTheUser._id);
 
