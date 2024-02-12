@@ -8,7 +8,7 @@ export const verifyJWT=async  (req,res,next)=>{
     try {
         
         const token=req.cookies.accessToken 
-
+        console.log(req.cookies)
         if(!token)
         return res.status(400).json({
         success:false,
