@@ -10,10 +10,6 @@ const viewSchema=new mongoose.Schema({
         type:mongoose.Types.ObjectId,
         ref:"Video"
     },
-    temporaryId:{
-        type:String,
-        required:true
-    }
 })
 
 viewSchema.plugin(mongooseAggregatePaginate)

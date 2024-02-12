@@ -4,7 +4,7 @@ import {
   uploadOnCloudinary,
   uploadVideoOnCloudinary,
 } from "../utils/cloudinary.js";
-
+import { View } from "../models/views.model.js";
 export const createVideo = async function (req, res) {
   try {
     const { title, description, isPublished, owner } = req.body;
@@ -94,6 +94,21 @@ export const getRequiredVideo = async function (req, res) {
   try {
     const { id } = req.params;
     const { userId } = req.body;
+
+    if(userId !== "5f4f54c11e35ab609d377c65")
+    {
+        const findWhetherVideoIsAlreadyViewedOrNot=await View.findOne({ownerId:new mongoose.Types.ObjectId(userId)})
+
+        if(findWhetherVideoIsAlreadyViewedOrNot === null)
+        {
+          const createdViewedVideo=await View.create({
+              ownerId:userId,
+              videoId:id
+          })
+          console.log(createdViewedVideo)
+        }
+    }
+
     const video = await Video.aggregate([
       {
           $match:{
@@ -153,9 +168,6 @@ export const getRequiredVideo = async function (req, res) {
         },
       },
     ]);
-
-    console.log("get video data ", video);
-
     return res.status(200).json({
       success: true,
       message: "video details fetched",
