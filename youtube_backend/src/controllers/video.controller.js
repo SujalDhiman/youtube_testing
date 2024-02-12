@@ -55,30 +55,46 @@ export const createVideo = async function (req, res) {
 export const getAllVideos = async function (req, res) {
   try {
     const videos = await Video.aggregate([
-      {
-        $lookup: {
-          from: "users",
-          localField: "owner",
-          foreignField: "_id",
-          as: "userData",
-          pipeline: [
-            {
-              $project: {
-                username: 1,
-                avatar: 1,
+        {
+              $lookup: {
+                from: "users",
+                localField: "owner",
+                foreignField: "_id",
+                as: "userData",
+                pipeline: [
+                  {
+                    $project: {
+                      username: 1,
+                      avatar: 1,
+                    },
+                  },
+                ],
               },
             },
-          ],
-        },
-      },
-      {
-        $unwind: "$userData",
-      },
-      {
-        $project: {
-          owner: 0,
-        },
-      },
+            {
+              $unwind: "$userData",
+            },
+            {
+                $lookup: {
+                  from: "views",
+                  localField: "_id",
+                  foreignField: "videoId",
+                  as: "totalViews"
+                }
+            },
+            {	
+                $addFields: {
+                  totalViews:{
+                    $size:"$totalViews"
+                  }
+                }
+            },
+            {
+              $project: {
+                owner: 0,
+                views:0,
+              },
+            },
     ]);
     return res.status(200).json({
       success: true,
@@ -97,15 +113,17 @@ export const getRequiredVideo = async function (req, res) {
 
     if(userId !== "5f4f54c11e35ab609d377c65")
     {
-        const findWhetherVideoIsAlreadyViewedOrNot=await View.findOne({ownerId:new mongoose.Types.ObjectId(userId)})
+        const findWhetherVideoIsAlreadyViewedOrNot=await View.findOne({$and
+          :[{ownerId:new mongoose.Types.ObjectId(userId)},{videoId:new mongoose.Types.ObjectId(id)}]})
 
-        if(findWhetherVideoIsAlreadyViewedOrNot === null)
+        console.log(findWhetherVideoIsAlreadyViewedOrNot)
+        
+        if(findWhetherVideoIsAlreadyViewedOrNot === null )
         {
           const createdViewedVideo=await View.create({
               ownerId:userId,
               videoId:id
           })
-          console.log(createdViewedVideo)
         }
     }
 
