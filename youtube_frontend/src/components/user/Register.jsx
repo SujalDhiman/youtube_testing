@@ -33,6 +33,7 @@ export default function Register() {
         "Content-Type": "multipart/form-data",
       },
     });
+    console.log(res);
     toast(`${res.data.message}`);
   }
   return (
@@ -93,7 +94,7 @@ export default function Register() {
               htmlFor="file1"
               className="block text-gray-800 font-bold mb-2"
             >
-              File Choose
+              Avatar
             </label>
             <input
               type="file"
@@ -108,7 +109,7 @@ export default function Register() {
               htmlFor="file2"
               className="block text-gray-800 font-bold mb-2"
             >
-              File Choose
+              Cover Image
             </label>
             <input
               type="file"
