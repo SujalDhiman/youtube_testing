@@ -3,6 +3,15 @@ import Home from "./components/mainPages/Home";
 import Login from "./components/user/Login";
 import LogoutUser from "./components/user/LogoutUser";
 import Register from "./components/user/Register";
-import { Modal } from "./components/utils/Modal";
+import { FileUpload } from "./components/utils/FileUpload";
 import { ShowVideo } from "./components/Video/NVideoDisplay";
-export { CreateVideo, Home, Login, LogoutUser, Register, Modal, ShowVideo };
+
+export {
+  CreateVideo,
+  Home,
+  Login,
+  LogoutUser,
+  Register,
+  FileUpload,
+  ShowVideo,
+};

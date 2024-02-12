@@ -1,3 +1,4 @@
+import Description from "../utils/Description";
 import { Likes } from "../utils/Likes"; // Import the LikeComponent
 
 export function VideoDisplay({ video }) {
@@ -13,7 +14,7 @@ export function VideoDisplay({ video }) {
     likedByUser,
   } = video;
   return (
-    <div className="min-h-screen bg-red-400">
+    <div className="min-h-screen bg-[#1d1d1d]">
       <div style={{ width: "100%", height: "80vh", overflow: "hidden" }}>
         <video
           style={{ width: "100%", height: "100%", objectFit: "cover" }}
@@ -23,21 +24,25 @@ export function VideoDisplay({ video }) {
           controls
         />
       </div>
-      <div className="mt-4 text-lg md:text-xl lg:text-2xl font-bold text-gray-800">
-        {title}
-      </div>
-      <div className="flex ">
-        <div className="flex items-center mt-2">
-          <img
-            src={userData.avatar.url}
-            alt="User Avatar"
-            className="w-10 h-10 rounded-full mr-2"
-          />
-          <span className="text-base md:text-lg lg:text-xl font-semibold text-gray-700">
-            {userData.username}
-          </span>
+      <div className=" border-white border-2 p-7 rounded-3xl mr-4 ml-4 mt-2">
+        <div className="rounded-3xl">
+          <div className="flex flex-col md:flex-row items-start">
+            <div className="mt-4 text-lg md:text-xl lg:text-2xl font-bold text-white">
+              {title}
+            </div>
+            {/* Like Component */}
+
+            <div className="p-2 mt-5 md:mt-3 md:ml-6 lg:ml-8 xl:ml-12 text-white bg-[#AE7AFF] rounded-xl text-xl">
+              <Likes
+                videoId={_id}
+                initialLikes={likes}
+                initialLiked={likedByUser}
+              />
+            </div>
+          </div>
         </div>
-        <div className="flex items-center mt-2 text-sm md:text-base lg:text-lg text-gray-600">
+
+        <div className="flex items-center mt-2 text-sm md:text-base lg:text-lg text-white">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-4 w-4 mr-1"
@@ -54,14 +59,19 @@ export function VideoDisplay({ video }) {
           <span className="mx-2">•</span>
           <span>{timeAgo(createdAt)}</span>
         </div>
-      </div>
-      <p className="text-gray-800 mt-4 text-base md:text-lg lg:text-xl">
-        {description}
-      </p>
-
-      {/* Like Component */}
-      <div className="flex items-center mt-4">
-        <Likes videoId={_id} initialLikes={likes} initialLiked={likedByUser} />
+        <div className="flex items-center mt-2">
+          <img
+            src={userData.avatar.url}
+            alt="User Avatar"
+            className="w-10 h-10 rounded-full mr-2"
+          />
+          <span className="text-base md:text-lg lg:text-xl font-semibold text-white">
+            {userData.username}
+          </span>
+        </div>
+        <div>
+          <Description description={description} />
+        </div>
       </div>
     </div>
   );

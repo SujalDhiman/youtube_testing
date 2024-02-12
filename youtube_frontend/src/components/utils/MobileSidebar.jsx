@@ -1,145 +1,72 @@
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { LogoutUser, ShowVideo } from "../../componentsCollection";
-import { useEffect, useState } from "react";
-import { URL } from "../../endpoints";
-import axios from "axios";
-import { loginUser } from "../../reduxtoolkit/authSlice";
-import { useMediaQuery } from "react-responsive";
-import { MobileSidebar } from "../utils/MobileSidebar";
-import { MobileSearch } from "../utils/MobileSearch";
-import { MobileNavigation } from "../utils/MobileNavigation";
 
-export default function Home() {
-  const [video, setVideos] = useState([]); //Intiallise all video
-  const [userData, setUserData] = useState(null);
-  const navigate = useNavigate();
-  const authStatus = useSelector((state) => state.auth.userStatus);
-  const dispatch = useDispatch();
+export function MobileSidebar() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1024px)" });
-
-  async function loadUserDetails() {
-    const user_id = localStorage.getItem("user-id");
-
-    if (user_id === null) return setUserData(null);
-    const response = await axios.get(`${URL}/users/getInstantUser/${user_id}`, {
-      withCredentials: true,
-    });
-
-    dispatch(loginUser(response.data.data));
-    setUserData(response.data.data);
-  }
-
-  //Function to get AllVideos from Backened
-  async function getVideos() {
-    const res = await axios.get(`${URL}/video/getAllVideo`, {
-      withCredentials: true,
-    });
-    console.log(res.data.data);
-    setVideos(res.data.data);
-  }
-
-  //Login Status Remember
-  useEffect(() => {
-    loadUserDetails();
-  }, [authStatus]);
-
-  // To get videos at starting of page loading
-  useEffect(() => {
-    getVideos();
-  }, []);
-
-  function signUp() {
-    navigate("/signUp");
-  }
-
-  function login() {
-    navigate("/login");
-  }
+  const toggleSidebar = () => {
+    setIsSidebarOpen((prevState) => !prevState);
+  };
 
   return (
-    <>
-      <div className="flex flex-col h-screen">
-        <header className="bg-[#1d1d1d] text-white p-4 fixed top-0 left-0 right-0 border-b-2 border-b-white">
-          <div className={`flex items-center justify-between`}>
-            <div className="flex items-center">
-              <img src="/path/to/your/logo.png" alt="Logo" className="mr-4" />
-            </div>
-            <div className="flex">
-              {!isTabletOrMobile ? (
-                <>
-                  <div className="relative pr-12">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      fill="currentColor"
-                      className="bi bi-search absolute left-3 top-1/2 transform -translate-y-1/2 text-white pointer-events-none "
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                    </svg>
-                    <input
-                      type="text"
-                      placeholder="Search"
-                      size={38}
-                      className="bg-[#1d1d1d] text-white p-2 pl-10 rounded border-white border-2"
-                    />
-                  </div>
-                </>
-              ) : (
-                <div className="pr-8">
-                  <MobileSearch />
-                </div>
-              )}
+    <div className="fixed bottom-8 right-8 z-50">
+      <button
+        className="bg-blue-500 hover:bg-blue-600 text-white rounded-full w-16 h-16 flex items-center justify-center shadow-lg"
+        onClick={toggleSidebar}
+      >
+        {!isSidebarOpen ? (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            className="w-6 h-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M4 6h16M4 12h16m-7 6h7"
+            />
+          </svg>
+        ) : (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            className="w-6 h-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        )}
+      </button>
 
-              {!authStatus && userData === null ? (
-                !isTabletOrMobile ? (
-                  <div className="flex items-center">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      fill="currentColor"
-                      className="bi bi-three-dots-vertical mx-8"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
-                    </svg>
-                    <button className="text-white mr-4" onClick={login}>
-                      Login
-                    </button>
-                    <button
-                      className="bg-[#AE7AFF] text-black px-4 py-2 rounded font-bold "
-                      onClick={signUp}
-                    >
-                      Sign Up
-                    </button>
-                  </div>
-                ) : (
-                  <MobileNavigation />
-                )
-              ) : (
-                <div className="flex items-center ">
-                  <button
-                    onClick={() => {
-                      navigate("/upload");
-                    }}
-                    className="w-6 bg-white rounded-full text-red-500 mr-4"
-                  >
-                    +
-                  </button>
-                  <LogoutUser />
-                </div>
-              )}
-            </div>
-          </div>
-        </header>
-        <div className="flex flex-1 mt-[75px]">
-          {!isTabletOrMobile ? (
-            <aside className=" w-1/5 sm:w-1/5 lg:w-1/5 xl:w-1/5 bg-[#1d1d1d] text-white py-2 border-r-white border-r-2 fixed min-h-full">
+      {isSidebarOpen && (
+        <div className="fixed inset-0 bg-[#1d1d1d] bg-opacity-25 flex justify-end">
+          <div className="w-64 bg-[#1d1d1d] h-screen">
+            <button className="p-2" onClick={toggleSidebar}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                className="w-6 h-6 text-white"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+            <div className="p-4 bg-[#1d1d1d] h-full">
               <nav>
                 <ul>
                   <NavLink
@@ -358,30 +285,10 @@ export default function Home() {
                   </NavLink>
                 </ul>
               </nav>
-            </aside>
-          ) : (
-            <MobileSidebar />
-          )}
-          <>
-            {!video.length ? (
-              <main className="flex-1 bg-white p-4 flex items-center justify-center">
-                <div className="text-center">
-                  <h2 className="text-3xl mb-4">No Video To show</h2>
-                  <p className="text-gray-600">
-                    Explore and enjoy your content here!{video.length}
-                  </p>
-                </div>
-              </main>
-            ) : (
-              <main className="grid w-full grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 p-4 overflow-auto bg-[#1d1d1d] ml-0 lg:ml-[20%]">
-                {video.map((el) => (
-                  <ShowVideo key={el._id} video={el} className="w-full" />
-                ))}
-              </main>
-            )}
-          </>
+            </div>
+          </div>
         </div>
-      </div>
-    </>
+      )}
+    </div>
   );
 }
