@@ -13,7 +13,7 @@ export function ShowVideo({ video }) {
         <img
           src={thumbnail.secure_url}
           alt="Thumbnail"
-          className="w-full h-40 object-cover max-w-full"
+          className="w-full h-40 max-w-full "
         />
       </div>
       <div className="flex">
