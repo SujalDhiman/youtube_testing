@@ -6,6 +6,7 @@ import { VideoDisplay } from "./DisplayOneVideo";
 import { useSelector } from "react-redux";
 import { jsonHandleHeader } from "../../../headersCollection";
 import { Comment } from "../utils/Comments";
+import { TextInputWithButtons } from "../utils/CommentInputText";
 
 export function ParticularVideo() {
   const userData = useSelector((state) => state.auth.userData);
@@ -34,13 +35,12 @@ export function ParticularVideo() {
     return () => fetchThisVideo();
   }, []);
 
-  useEffect(() => {}, []);
-
   return (
     <div className="bg-[#1d1d1d]">
       {video && <VideoDisplay video={video} />}
       {/* Comment Componenet */}
       <div className="mt-4 mr-4 ml-4 border-2 border-white rounded-xl p-2">
+        <TextInputWithButtons userData={userData} />
         <Comment
           username="User123"
           timestamp="2 hours ago"

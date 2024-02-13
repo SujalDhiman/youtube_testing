@@ -28,12 +28,18 @@ export default function Register() {
       coverImage: data.coverImage[0],
     };
 
-    const res = await axios.post(`${URL}/users/register`, payload, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    console.log(res);
+    try {
+      const res = await axios.post(`${URL}/users/register`, payload, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log(res);
+      toast.success(`${res.data.message}`);
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to register. Please try again.");
+    }
     toast(`${res.data.message}`);
   }
   return (
@@ -54,7 +60,7 @@ export default function Register() {
               name="username"
               className="w-full border border-gray-300 p-2 rounded-lg"
               placeholder="Enter your username"
-              {...register("username")}
+              {...register("username", { required: true })}
             />
           </div>
           <div>
@@ -70,7 +76,7 @@ export default function Register() {
               name="email"
               className="w-full border border-gray-300 p-2 rounded-lg"
               placeholder="Enter your email address"
-              {...register("email")}
+              {...register("email", { required: true })}
             />
           </div>
           <div>
@@ -86,7 +92,7 @@ export default function Register() {
               name="fullName"
               className="w-full border border-gray-300 p-2 rounded-lg"
               placeholder="Enter your full name"
-              {...register("fullName")}
+              {...register("fullName", { required: true })}
             />
           </div>
           <div>
@@ -101,7 +107,7 @@ export default function Register() {
               id="file1"
               name="file1"
               className="w-full border border-gray-300 p-2 rounded-lg"
-              {...register("avatar")}
+              {...register("avatar", { required: true })}
             />
           </div>
           <div>
@@ -116,7 +122,7 @@ export default function Register() {
               id="file2"
               name="file2"
               className="w-full border border-gray-300 p-2 rounded-lg"
-              {...register("coverImage")}
+              {...register("coverImage", { required: true })}
             />
           </div>
           <div>
@@ -132,7 +138,7 @@ export default function Register() {
               name="password"
               className="w-full border border-gray-300 p-2 rounded-lg"
               placeholder="Enter your password"
-              {...register("password")}
+              {...register("password", { required: true })}
             />
           </div>
           <div>
@@ -148,38 +154,4 @@ export default function Register() {
       <ToastContainer />
     </div>
   );
-}
-
-//previous code
-{
-  /* <form onSubmit={handleSubmit(onSubmit)}>
-      <label htmlFor="username">Username:</label>
-      <input
-        type="text"
-        name="username"
-        placeholder="Enter Name"
-        id="username"
-        {...register("username")}
-      />
-      <label htmlFor="email">Email</label>
-      <input type="email" name="email" id="email" {...register("email")} />
-      <label htmlFor="fullName">fullName </label>
-      <input
-        type="text"
-        name="fullName"
-        id="fullName"
-        {...register("fullName")}
-      />
-      <input type="file" name="avatar" {...register("avatar")} />
-      <input type="file" name="coverImage" {...register("coverImage")} />
-      <label htmlFor="password">Password:</label>
-      <input
-        type="password"
-        name="password"
-        id="password"
-        {...register("password")}
-      />
-      <button type="submit">Submit</button>
-    </form>
-  ); */
 }

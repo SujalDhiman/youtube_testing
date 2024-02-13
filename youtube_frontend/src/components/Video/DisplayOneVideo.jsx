@@ -6,13 +6,14 @@ export function VideoDisplay({ video }) {
     userData,
     title,
     description,
-    views,
+    totalViews,
     createdAt,
     videoFile,
     _id,
     likes,
     likedByUser,
   } = video;
+  console.log("video details", video);
   return (
     <div className="min-h-screen bg-[#1d1d1d]">
       <div style={{ width: "100%", height: "80vh", overflow: "hidden" }}>
@@ -55,7 +56,7 @@ export function VideoDisplay({ video }) {
               clipRule="evenodd"
             />
           </svg>
-          <span>{views} Views</span>
+          <span>{totalViews} Views</span>
           <span className="mx-2">•</span>
           <span>{timeAgo(createdAt)}</span>
         </div>

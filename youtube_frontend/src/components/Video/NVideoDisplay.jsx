@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 export function ShowVideo({ video }) {
-  const { thumbnail, title, views = 0, userData, createdAt, _id } = video;
+  const { thumbnail, title, totalViews = 0, userData, createdAt, _id } = video;
 
   return (
     <Link
@@ -29,7 +29,7 @@ export function ShowVideo({ video }) {
             {title.length > 20 ? title.substring(0, 21) + "..." : title}
           </h2>
           <div className="text-white mb-2 flex justify-around">
-            <p>{`${views.toLocaleString()} Views`}</p>
+            <p>{`${totalViews.toLocaleString()} Views`}</p>
             <p className="flex">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

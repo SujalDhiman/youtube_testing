@@ -75,8 +75,24 @@ export const getAllVideos = async function (req, res) {
         $unwind: "$userData",
       },
       {
+        $lookup: {
+          from: "views",
+          localField: "_id",
+          foreignField: "videoId",
+          as: "totalViews",
+        },
+      },
+      {
+        $addFields: {
+          totalViews: {
+            $size: "$totalViews",
+          },
+        },
+      },
+      {
         $project: {
           owner: 0,
+          views: 0,
         },
       },
     ]);
@@ -97,19 +113,15 @@ export const getRequiredVideo = async function (req, res) {
 
     if (userId !== "5f4f54c11e35ab609d377c65") {
       const findWhetherVideoIsAlreadyViewedOrNot = await View.findOne({
-        $and: [
-          { ownerId: new mongoose.Types.ObjectId(userId) },
-          { videoId: new mongoose.Types.ObjectId(id) },
-        ],
+        ownerId: new mongoose.Types.ObjectId(userId),
       });
-
-      console.log(findWhetherVideoIsAlreadyViewedOrNot);
 
       if (findWhetherVideoIsAlreadyViewedOrNot === null) {
         const createdViewedVideo = await View.create({
           ownerId: userId,
           videoId: id,
         });
+        console.log(createdViewedVideo);
       }
     }
 
