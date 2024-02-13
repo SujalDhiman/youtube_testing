@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { LogoutUser, ShowVideo } from "../../componentsCollection";
+import { Profile, ShowVideo } from "../../componentsCollection";
 import { useEffect, useState } from "react";
 import { URL } from "../../endpoints";
 import axios from "axios";
@@ -131,7 +131,7 @@ export default function Home() {
                   >
                     +
                   </button>
-                  <LogoutUser />
+                  <Profile userData={userData} />
                 </div>
               )}
             </div>
