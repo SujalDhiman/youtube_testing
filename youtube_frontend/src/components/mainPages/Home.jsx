@@ -27,7 +27,7 @@ export default function Home() {
     const response = await axios.get(`${URL}/users/getInstantUser/${user_id}`, {
       withCredentials: true,
     });
-
+    console.log(response);
     dispatch(loginUser(response.data.data));
     setUserData(response.data.data);
   }
@@ -131,7 +131,7 @@ export default function Home() {
                   >
                     +
                   </button>
-                  <Profile userData={userData} />
+                  {userData === null ? "" : <Profile userData={userData} />}
                 </div>
               )}
             </div>
