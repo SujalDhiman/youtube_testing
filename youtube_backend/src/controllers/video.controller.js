@@ -119,15 +119,12 @@ export const getRequiredVideo = async function (req, res) {
       const findWhetherVideoIsAlreadyViewedOrNot = await View.findOne({$and:[{
         ownerId: new mongoose.Types.ObjectId(userId),
       },{videoId:new mongoose.Types.ObjectId(id)}]});
-      
-      console.log(findWhetherVideoIsAlreadyViewedOrNot)
 
       if (findWhetherVideoIsAlreadyViewedOrNot === null) {
         const createdViewedVideo = await View.create({
           ownerId: userId,
           videoId: id,
         });
-        console.log(createdViewedVideo);
       }
     }
 
@@ -135,12 +132,21 @@ export const getRequiredVideo = async function (req, res) {
     {
         const userDetail=await User.findById(userId);
         let watchHistory=userDetail.watchHistory
-        const checkIfVideoIsAlreadyInHistoryOrNot=watchHistory.filter((ele)=>ele === id)
+        console.log(String(watchHistory[0]))
+        const checkIfVideoIsAlreadyInHistoryOrNot=watchHistory.filter((ele)=>String(ele) === String(id))
+        console.log(checkIfVideoIsAlreadyInHistoryOrNot)
         if(checkIfVideoIsAlreadyInHistoryOrNot.length === 0)
         {
             watchHistory=[id,...watchHistory]
             userDetail.watchHistory=watchHistory
             await userDetail.save({validateBeforeSave:false});
+        }
+        else // in order to maintain the order
+        {
+            watchHistory=watchHistory.filter((ele)=>String(ele) !== String(id))
+            watchHistory=[id,...watchHistory]
+            userDetail.watchHistory=watchHistory
+            await userDetail.save({validateBeforeSave:false})
         }
     }
 
