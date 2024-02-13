@@ -5,6 +5,9 @@ import {
   uploadVideoOnCloudinary,
 } from "../utils/cloudinary.js";
 import { View } from "../models/views.model.js";
+import { User } from "../models/user.model.js";
+
+
 export const createVideo = async function (req, res) {
   try {
     const { title, description, isPublished, owner } = req.body;
@@ -111,10 +114,13 @@ export const getRequiredVideo = async function (req, res) {
     const { id } = req.params;
     const { userId } = req.body;
 
+    //logic for increasing views
     if (userId !== "5f4f54c11e35ab609d377c65") {
-      const findWhetherVideoIsAlreadyViewedOrNot = await View.findOne({
+      const findWhetherVideoIsAlreadyViewedOrNot = await View.findOne({$and:[{
         ownerId: new mongoose.Types.ObjectId(userId),
-      });
+      },{videoId:new mongoose.Types.ObjectId(id)}]});
+      
+      console.log(findWhetherVideoIsAlreadyViewedOrNot)
 
       if (findWhetherVideoIsAlreadyViewedOrNot === null) {
         const createdViewedVideo = await View.create({
@@ -123,6 +129,19 @@ export const getRequiredVideo = async function (req, res) {
         });
         console.log(createdViewedVideo);
       }
+    }
+
+    if(userId !== "5f4f54c11e35ab609d377c65")
+    {
+        const userDetail=await User.findById(userId);
+        let watchHistory=userDetail.watchHistory
+        const checkIfVideoIsAlreadyInHistoryOrNot=watchHistory.filter((ele)=>ele === id)
+        if(checkIfVideoIsAlreadyInHistoryOrNot.length === 0)
+        {
+            watchHistory=[id,...watchHistory]
+            userDetail.watchHistory=watchHistory
+            await userDetail.save({validateBeforeSave:false});
+        }
     }
 
     const video = await Video.aggregate([
