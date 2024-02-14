@@ -30,7 +30,7 @@ export function TextInputWithButtons({ userData }) {
   return (
     <div className="flex flex-row items-center justify-center bg-[#1d1d1d] pt-8 pb-10">
       <img
-        src={userData.avatar.url}
+        // src={userData.avatar.url}
         alt="userImage"
         className="w-10 h-10 rounded-full ml-2"
       />
