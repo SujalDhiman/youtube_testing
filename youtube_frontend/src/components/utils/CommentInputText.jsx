@@ -1,30 +1,21 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import {useSelector} from "react-redux"
 import axios from "axios";
 
 export function TextInputWithButtons({ userData }) {
   const [showButtons, setShowButtons] = useState(false);
   const { handleSubmit, register, reset } = useForm();
+  const [totalComments,setTotalCOmments]=useState([])
+  const userDetails=useSelector((state)=>state.auth.userData)
 
   //TODO:
   async function onSubmit(data) {
     setShowButtons(false);
     reset();
-    console.log(data);
-
-    //payload={}
-
-    // try {
-    //   const response = await axios.post(``, payload, {
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     withCredentials: true,
-    //   });
-    //   console.log(response.data);
-    // } catch (error) {
-    //   console.error(error);
-    // }
+    const comment={
+      text:data.comment,
+    }
   }
 
   return (

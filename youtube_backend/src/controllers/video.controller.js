@@ -131,22 +131,21 @@ export const getRequiredVideo = async function (req, res) {
     if(userId !== "5f4f54c11e35ab609d377c65")
     {
         const userDetail=await User.findById(userId);
-        let watchHistory=userDetail.watchHistory
-        console.log(String(watchHistory[0]))
-        const checkIfVideoIsAlreadyInHistoryOrNot=watchHistory.filter((ele)=>String(ele) === String(id))
-        console.log(checkIfVideoIsAlreadyInHistoryOrNot)
-        if(checkIfVideoIsAlreadyInHistoryOrNot.length === 0)
-        {
-            watchHistory=[id,...watchHistory]
-            userDetail.watchHistory=watchHistory
-            await userDetail.save({validateBeforeSave:false});
+        let arr=userDetail.watchHistory
+
+        const obj={
+          watchedTime:String(Date.now()),
+          videoId:id
         }
-        else // in order to maintain the order
+
+        arr=arr.filter((ele)=>
+        String(ele.videoId) === String(id))
+
+
+        if(arr.length == 0)
         {
-            watchHistory=watchHistory.filter((ele)=>String(ele) !== String(id))
-            watchHistory=[id,...watchHistory]
-            userDetail.watchHistory=watchHistory
-            await userDetail.save({validateBeforeSave:false})
+          userDetail.watchHistory=userDetail.watchHistory.push(obj);
+          await userDetail.save({validateBeforeSave:false})
         }
     }
 
