@@ -1,27 +1,28 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import {useSelector} from "react-redux"
+import { useSelector } from "react-redux";
 import axios from "axios";
 
 export function TextInputWithButtons({ userData }) {
   const [showButtons, setShowButtons] = useState(false);
   const { handleSubmit, register, reset } = useForm();
-  const [totalComments,setTotalCOmments]=useState([])
-  const userDetails=useSelector((state)=>state.auth.userData)
+  const [totalComments, setTotalCOmments] = useState([]);
+  const userDetails = useSelector((state) => state.auth.userData);
 
   //TODO:
   async function onSubmit(data) {
     setShowButtons(false);
     reset();
-    const comment={
-      text:data.comment,
-    }
+    const comment = {
+      text: data.comment,
+    };
   }
 
+  console.log("userData", userData);
   return (
     <div className="flex flex-row items-center justify-center bg-[#1d1d1d] pt-8 pb-10">
       <img
-        // src={userData.avatar.url}
+        // src={userData.avatar.secure_url}
         alt="userImage"
         className="w-10 h-10 rounded-full ml-2"
       />

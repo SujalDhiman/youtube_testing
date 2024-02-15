@@ -42,6 +42,9 @@ export function ParticularVideo() {
       {/* Comment Componenet */}
       <div className="flex">
         <div className="mt-4 mr-4 ml-4 border-2 border-white rounded-xl p-2 w-3/5 pr-4 h-fit">
+          <p className=" font-bold text-start text-white p-4 text-xl">
+            {504} comments
+          </p>
           <TextInputWithButtons userData={userData} />
           <Comment
             username="User123"
@@ -51,10 +54,13 @@ export function ParticularVideo() {
         </div>
         <div className=" w-[40%]">
           {/* TODO: */}
-          <h2 className="text-lg font-semibold mb-2">Recommended Videos</h2>
-
-          <RecommendedVideo />
-          <RecommendedVideo />
+          <div className="mt-4 mr-4 ml-4 border-2 border-white rounded-xl p-2 pr-4">
+            <h2 className=" font-semibold mb-2 text-white text-start text-xl p-4 ">
+              Recommended Videos
+            </h2>
+            <RecommendedVideo />
+            <RecommendedVideo />
+          </div>
         </div>
       </div>
     </div>

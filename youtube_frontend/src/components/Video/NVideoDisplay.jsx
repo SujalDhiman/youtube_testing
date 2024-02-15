@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 
 export function ShowVideo({ video }) {
   const { thumbnail, title, totalViews = 0, userData, createdAt, _id } = video;
-
   return (
     <Link
       to={`/getParticularVideo/${_id}`}

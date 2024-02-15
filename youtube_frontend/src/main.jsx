@@ -7,6 +7,8 @@ import { Provider } from "react-redux";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Home, Login, Register, FileUpload } from "./componentsCollection.js";
 import { ParticularVideo } from "./components/Video/HandleParticularVideo.jsx";
+import { UserHistory } from "./components/utils/UserHistory.jsx";
+import { MyChannel } from "./components/utils/MyChannel.jsx";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +34,14 @@ const router = createBrowserRouter([
       {
         path: "getParticularVideo/:id",
         element: <ParticularVideo />,
+      },
+      {
+        path: "/history",
+        element: <UserHistory />,
+      },
+      {
+        path: "/myChannel",
+        element: <MyChannel />,
       },
       {
         path: "*",
