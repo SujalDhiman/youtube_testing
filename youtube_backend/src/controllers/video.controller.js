@@ -217,3 +217,66 @@ export const getRequiredVideo = async function (req, res) {
     console.log("error in getting required video ", error.message);
   }
 };
+
+export const getUserHistory= async function(req,res){
+
+    try {
+      const {id}=req.params
+  
+      if(!id)
+        return res.status(400).json({
+          success:false,
+          message:"User history cannot be fetched"})
+        
+      const userHistory=await User.aggregate([
+        {
+          $match: {
+              _id:new mongoose.Types.ObjectId(id)
+          }
+        },
+        {
+          $project:{
+                watchHistory:1
+            }
+        },
+        {
+          $unwind:"$watchHistory"
+        },
+        {
+          $lookup: {
+            from: "videos",
+            localField: "watchHistory.videoId",
+            foreignField: "_id",
+            as: "videoData"
+          }
+        },
+        {
+          $project:{
+            watchHistory:0
+          }
+        },
+        {
+          $unwind:"$videoData"
+        },
+        {
+          $group: {
+            _id: "_id",
+              userHistory: {
+                $push:"$videoData"
+            }
+          }
+        }
+      ])
+    
+    console.log(userHistory)
+
+    return res.status(200).json({
+        success:true,
+        message:"History fetched successfully",
+        data:userHistory
+    })
+    } catch (error) {
+      console.log("something went wrong in user getting user history ",error)
+    }
+  
+}
