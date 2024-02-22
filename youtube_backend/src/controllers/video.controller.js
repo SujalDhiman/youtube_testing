@@ -228,44 +228,65 @@ export const getUserHistory= async function(req,res){
           success:false,
           message:"User history cannot be fetched"})
         
-      const userHistory=await User.aggregate([
-        {
-          $match: {
-              _id:new mongoose.Types.ObjectId(id)
-          }
-        },
-        {
-          $project:{
-                watchHistory:1
+      const userHistory=await User.aggregate(
+        [
+          {
+              $match: {
+                    _id:new mongoose.Types.ObjectId(id)
+                  }
+                },
+          {
+            $project:{
+              watchHistory:1
             }
-        },
-        {
-          $unwind:"$watchHistory"
-        },
-        {
-          $lookup: {
-            from: "videos",
-            localField: "watchHistory.videoId",
-            foreignField: "_id",
-            as: "videoData"
-          }
-        },
-        {
-          $project:{
-            watchHistory:0
-          }
-        },
-        {
-          $unwind:"$videoData"
-        },
-        {
-          $group: {
-            _id: "_id",
-              userHistory: {
+          },
+          {
+            $unwind:"$watchHistory"
+          },
+          {
+            $lookup: {
+              from: "videos",
+              localField: "watchHistory.videoId",
+              foreignField: "_id",
+              as: "videoData",
+              pipeline:[
+                {
+                  $lookup:{
+                    from:"users",
+                    localField:"owner",
+                    foreignField:"_id",
+                    as:"userData",
+                    pipeline:[
+                      {
+                        $project:{
+                          username:1
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  $unwind:"$userData"
+                }
+              ]
+            }
+          },
+          {
+            $unwind:"$videoData"
+          },
+          {
+            $project:{
+              videoData:1
+            }
+          },
+          {
+            $group:{
+              _id:"_id",
+              userHistory:{
                 $push:"$videoData"
+              }
             }
           }
-        }
       ])
     
     console.log(userHistory)
