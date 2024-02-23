@@ -53,7 +53,7 @@ export function UserHistory() {
             </div>
           </div>
         </div>
-        <div className="w-full lg:w-8/12 h-screen p-8 lg:p-16 overflow-y-auto">
+        <div className="w-full lg:w-8/12 p-8 lg:p-16 overflow-y-auto">
           {history.length === 0 ? <p className="text-white">nothing to show</p> :
             history.map((el,idx) => <ShowHistoryVideo Videodata={el} key={idx} />)}
         </div>
