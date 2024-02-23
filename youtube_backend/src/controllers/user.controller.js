@@ -412,3 +412,22 @@ export const getUserChannelProfile = async function (req, res) {
     data: channel,
   });
 };
+
+export const deleteUserHistory= async function (req,res){
+
+  const {id}=req.params
+
+  let user=await User.findById(id)
+
+  user.watchHistory=[]
+
+  await user.save({validateBeforeSave:false})
+
+
+  return res.status(200).json({
+      success:true,
+      message:"history deleted successfully"
+  })
+
+
+}

@@ -227,7 +227,20 @@ export const getUserHistory= async function(req,res){
         return res.status(400).json({
           success:false,
           message:"User history cannot be fetched"})
-        
+      
+
+      const userHistoryData=await User.findById(id)
+      
+      if(userHistoryData.watchHistory.length == 0)
+      {
+         return res.status(200).json({
+            success:true,
+            message:"empty user history",
+            data:[]
+         })
+      }
+      else
+      {
       const userHistory=await User.aggregate(
         [
           {
@@ -289,13 +302,12 @@ export const getUserHistory= async function(req,res){
           }
       ])
     
-    console.log(userHistory)
-
     return res.status(200).json({
         success:true,
         message:"History fetched successfully",
         data:userHistory
     })
+    }
     } catch (error) {
       console.log("something went wrong in user getting user history ",error)
     }

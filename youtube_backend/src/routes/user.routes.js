@@ -9,6 +9,7 @@ import {
   updateUserAvatar,
   getUserChannelProfile,
   getInstantUser,
+  deleteUserHistory
 } from "../controllers/user.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
@@ -46,5 +47,8 @@ router
   .get(verifyJWT, getUserChannelProfile);
 
 router.route("/getInstantUser/:id").get(getInstantUser);
+
+router.route("/deleteWatchHistory/:id").get(deleteUserHistory)
+
 
 export default router;
