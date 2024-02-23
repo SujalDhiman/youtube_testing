@@ -6,8 +6,7 @@ import axios from "axios";
 export function TextInputWithButtons({ userData }) {
   const [showButtons, setShowButtons] = useState(false);
   const { handleSubmit, register, reset } = useForm();
-  const [totalComments, setTotalCOmments] = useState([]);
-  const userDetails = useSelector((state) => state.auth.userData);
+  const [totalComments, setTotalComments] = useState([]);
 
   //TODO:
   async function onSubmit(data) {
@@ -18,11 +17,10 @@ export function TextInputWithButtons({ userData }) {
     };
   }
 
-  console.log("userData", userData);
   return (
     <div className="flex flex-row items-center justify-center bg-[#1d1d1d] pt-8 pb-10">
       <img
-        // src={userData.avatar.secure_url}
+        src={userData && userData.avatar.url}
         alt="userImage"
         className="w-10 h-10 rounded-full ml-2"
       />

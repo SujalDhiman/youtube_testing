@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { jsonHandleHeader } from "../../../headersCollection";
 import { Comment } from "../utils/Comments";
 import { TextInputWithButtons } from "../utils/CommentInputText";
-import { RecommendedVideo } from "../utils/RecommendedVideo";
+// import { Recommend\edVideo } from "../utils/ShowHistoryVideo";
 
 export function ParticularVideo() {
   const userData = useSelector((state) => state.auth.userData);
@@ -54,13 +54,13 @@ export function ParticularVideo() {
         </div>
         <div className=" w-[40%]">
           {/* TODO: */}
-          <div className="mt-4 mr-4 ml-4 border-2 border-white rounded-xl p-2 pr-4">
+          {/* <div className="mt-4 mr-4 ml-4 border-2 border-white rounded-xl p-2 pr-4">
             <h2 className=" font-semibold mb-2 text-white text-start text-xl p-4 ">
               Recommended Videos
             </h2>
             <RecommendedVideo />
             <RecommendedVideo />
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

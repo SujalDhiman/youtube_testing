@@ -1,39 +1,45 @@
+import { Tabs } from "./Tabs";
+
+const TabNames = ["Videos", "PlayList", "Tweets", "Following"];
+
 export function MyChannel() {
   return (
     <div className="bg-[#1d1d1d] h-screen w-screen text-red-500 font-bold text-lg">
-      <div className="w-screen bg-white h-[30%] relative pl-10 ">
+      <div className="w-screen bg-white h-[30%] relative ">
         {/* <img src="" alt="" /> */}
-        <div className="absolute top-3/4 left-0 right-0 flex items-center h-fit ml-12">
-          <div className="bg-red-400 rounded-full h-36 w-36 border-2 border-green-400">
-            {/* <img src="" alt="" /> */}
-          </div>
-          <div className="p-4">
-            <div>
-              <div>Yash Mittal</div>
-              <div>@YashMittal</div>
+        <div className="absolute top-3/4 left-0 right-0 flex items-center h-fit ml-12 justify-around">
+          <div className="flex items-center">
+            <div className="bg-red-400 rounded-full h-36 w-36 border-2 border-green-400">
+              {/* <img src="" alt="" /> */}
             </div>
-            <div className="flex items-center">
-              <div>{600}k Subscribers</div>
-              <div className="flex items-center pl-5">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  className="bi bi-dot h-full"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3" />
-                </svg>
-                <p>{200} Subscribed</p>
+            <div className="p-4">
+              <div>
+                <div>Yash Mittal</div>
+                <div>@YashMittal</div>
+              </div>
+              <div className="flex items-center">
+                <div>600k Subscribers</div>
+                <div className="flex items-center pl-5">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    className="bi bi-dot h-full"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3" />
+                  </svg>
+                  <p>200 Subscribed</p>
+                </div>
               </div>
             </div>
           </div>
           <button className="flex bg-green-400 p-4 rounded-full">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
+              width="36"
+              height="36"
               fill="currentColor"
               className="bi bi-person-plus text-bold h-full pr-2"
               viewBox="0 0 16 16"
@@ -45,6 +51,7 @@ export function MyChannel() {
           </button>
         </div>
       </div>
+      <Tabs TabNames={TabNames} />
     </div>
   );
 }

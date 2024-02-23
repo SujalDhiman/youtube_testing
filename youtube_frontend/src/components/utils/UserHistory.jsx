@@ -1,6 +1,24 @@
-import { RecommendedVideo } from "./RecommendedVideo";
+import { ShowHistoryVideo } from "./ShowHistoryVideo";
+import { URL } from "../../endpoints";
+import axios from "axios";
+import { useSelector } from "react-redux";
+
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 export function UserHistory() {
+  const { _id } = useSelector((state) => state.auth.userData);
+  const [history, setHistory] = useState([]);
+
+  useEffect(() => {
+    const getHistory = async () => {
+      const res = await axios.get(`${URL}/video/getHistory/${_id}`);
+      setHistory(res.data.data[0].userHistory);
+      console.log(res.data.data[0].userHistory);
+    };
+    getHistory();
+  }, []);
+
   return (
     <div className="bg-[#1d1d1d] min-h-screen text-white">
       <div className="flex flex-col lg:flex-row">
@@ -22,7 +40,8 @@ export function UserHistory() {
           </div>
         </div>
         <div className="w-full lg:w-8/12 h-screen p-8 lg:p-16 overflow-y-auto">
-          <RecommendedVideo />
+          {history &&
+            history.map((el) => <ShowHistoryVideo Videodata={el} key={el} />)}
         </div>
       </div>
     </div>

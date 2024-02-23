@@ -30,10 +30,10 @@ export default function Profile({ userData }) {
         onClick={toggleMenu}
       />
       {toggleOption && (
-        <div className="absolute top-12 right-0 mt-2 w-32 rounded-lg shadow-lg bg-[#1d1d1d] border border-gray-200">
+        <div className="absolute top-12 right-0 mt-2 w-32 rounded-lg shadow-lg bg-[#1d1d1d] border border-gray-200 hover:bg-green-400">
           <ul>
             <li
-              className="py-2 px-4 hover:bg-gray-800 cursor-pointer"
+              className="py-2 px-4 cursor-pointer"
               onClick={logoutCurrentUser}
             >
               Logout
@@ -45,7 +45,7 @@ export default function Profile({ userData }) {
   );
 }
 
-//Previos
+//Previous
 // export default function LogoutUser()
 // {
 //     let dispatch=useDispatch()
